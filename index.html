@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <noscript>
+        <meta http-equiv="refresh" content="0;url=noscript">
+    </noscript>
+    <meta charset="UTF-8">
+    <title>Files.co.pl</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://dev.files.co.pl/assets/css/mdb.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <link href="https://dev.files.co.pl/assets/css/main.css" rel="stylesheet"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+		async function getAPIFilesCount() {
+				const response = await fetch('https://stats.files.co.pl/api/v1/stats');
+				const data = await response.json();
+
+                document.getElementById('serviceStatisticsfileCount').innerHTML =  data.serviceStatistics.fileCount;
+
+                let serviceStatisticstotalSizeMB = data.serviceStatistics.totalSize / 1024 / 1024;
+                document.getElementById('serviceStatisticstotalSize').innerHTML =  serviceStatisticstotalSizeMB.toFixed();
+
+                data.nodes.forEach(foreachAPINodes);
+                function foreachAPINodes(item, index) {
+                    let StatsApiNodesUptimeSeconds = item.uptime / 1000;
+                    let StatsApiNodesUptimeMinutes = StatsApiNodesUptimeSeconds / 60;
+                    let StatsApiNodesUptimeHours = StatsApiNodesUptimeMinutes / 60;
+                    let StatsApiNodesUptimeDays = StatsApiNodesUptimeHours / 24;
+                    let StatsApiNodesUptimeDaysRounded = StatsApiNodesUptimeDays.toFixed();
+
+                    console.log(StatsApiNodesUptimeSeconds);
+                    console.log(StatsApiNodesUptimeMinutes);
+                    console.log(StatsApiNodesUptimeHours);
+                    console.log(StatsApiNodesUptimeDays);
+
+                    document.getElementById('StatsApiNodesUptime').innerHTML =  StatsApiNodesUptimeDaysRounded;
+                }
+                console.log('Jestem ciekaw dlaczego patrzysz w konsole...')
+			}
+		getAPIFilesCount();
+		</script>
+</head>
+<body class="bg-custom">
+<ul class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><b>Files.</b><span class="copl">co.pl</span></a>
+            <button aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-mdb-target="#navbarExample01" data-mdb-toggle="collapse" type="button">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarExample01">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://files.co.pl/faq/">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://docs.analitycy.host/">API</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://github.com/Analitycy-host/">Github</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://stats.files.co.pl/">Stats</a>
+                    </li>
+                </ul>                
+            </div>
+        </div>
+    </nav>
+    <div class="p-5 text-center">
+        <h1 class="mb-3 text-white">STATS.FILES</h1>
+    </div>
+</header>
+<main>
+    <div class="container text-center">
+        <div class="row m-auto d-inline-flex justify-content-center">
+            <div class="col-xl-4 mt-3">
+                <div class="card bg-dark text-white border-warning border-cards h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Pliki</h5>
+                        <p class="card-text">
+                            Nasz serwis hostuje już ponad 
+                            <span id="serviceStatisticsfileCount" style="font-weight: bold;"></span>
+                            plików których całkowity rozmiar przekracza
+                            <span id="serviceStatisticstotalSize" style="font-weight: bold;"></span> Megabajtów!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 mt-3">
+                <div class="card bg-dark text-white border-warning border-cards h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Uptime</h5>
+                        <p class="card-text">
+                            Gwarantujemy blisko <span style="font-weight: bold;">100%</span> Uptime!<br>
+                            Ostatnia awaria miała miejsce: <span id="StatsApiNodesUptime"style="font-weight: bold;"></span> dni temu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="text-center text-white text-lg-start mt-5 d-inline-block" style="background-color: rgba(0, 0, 0, 0.2)">
+    <div class="text-center p-3">
+        &copy; 2020 - <script>document.write(new Date().getFullYear())</script> <a class="text-light" href="https://analitycy.host/">Analitycy.host</a>
+        <div class="text-end float-end">
+            <a href="/"><i class="pl flag"></i></a>
+            <a href="/en"><i class="gb uk flag"></i></a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
